@@ -1,6 +1,6 @@
 ---
 name: ui-tester
-description: Playwright로 실행 중인 앱의 UI를 검증(채팅 입력, 퀵메뉴, 반응형, 다크모드)하고 결과를 요약. UI 변경 후 동작 확인이 필요할 때 사용.
+description: Playwright로 실행 중인 앱의 UI를 검증(목록 필터, 상세 이동, 404, 반응형, 다크모드)하고 결과를 요약. UI 변경 후 동작 확인이 필요할 때 사용.
 tools: Read, Grep, Glob, Bash, mcp__playwright__browser_navigate, mcp__playwright__browser_snapshot, mcp__playwright__browser_click, mcp__playwright__browser_type, mcp__playwright__browser_fill_form, mcp__playwright__browser_press_key, mcp__playwright__browser_resize, mcp__playwright__browser_emulate_media, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_console_messages, mcp__playwright__browser_network_requests, mcp__playwright__browser_wait_for, mcp__playwright__browser_close
 model: sonnet
 ---
@@ -12,9 +12,8 @@ model: sonnet
 2. 테스트 대상은 요청에서 지정한 범위를 우선하고, 없으면 아래 기본 시나리오를 수행한다.
 
 ## 기본 시나리오
-- **채팅**: 메시지 입력 후 전송 → 사용자 메시지와 응답 표시, 자동 스크롤, 로딩 상태, 빈 입력 차단
-  - 키워드별 응답 확인: 배송, 주문, 환불, 추천, 그 외(default)
-- **퀵메뉴**: 각 메뉴 클릭 시 기대 동작
+- **목록**: 재료 필터·카테고리·난이도·정렬 적용 시 URL 쿼리와 카드 결과 일치, 빈 결과 메시지 노출
+- **상세**: 카드 클릭 → 상세 이동, 없는 슬러그 404, 목록 복귀 링크
 - **반응형**: 모바일(375px), 태블릿(768px), 데스크톱(1280px)에서 레이아웃 깨짐 여부
 - **다크모드**: `prefers-color-scheme: dark`에서 가독성과 색상 대비
 - **콘솔/네트워크**: 에러와 경고, 실패한 요청

@@ -7,7 +7,7 @@ argument-hint: <컴포넌트명> <설명>
 
 ## 작업 순서
 1. 작성 전 `node_modules/next/dist/docs/`에서 관련 가이드를 확인한다 (Next.js 16 변경사항 대응).
-2. `app/components/Chat.tsx`, `Header.tsx`의 기존 패턴을 참고한다.
+2. `app/components/Header.tsx`, `components/recipes/RecipeCard.tsx`의 기존 패턴을 참고한다.
 3. `app/components/<PascalCase>.tsx`에 생성한다.
 
 ## 규칙

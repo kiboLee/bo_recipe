@@ -21,13 +21,13 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git a
 ## 커밋 유형
 | 유형 | 용도 | 예시 |
 |---|---|---|
-| `feat` | 새 기능 추가 | `feat: 채팅 예시 질문 바로 전송 기능 추가` |
+| `feat` | 새 기능 추가 | `feat: 레시피 목록 재료 필터 추가` |
 | `fix` | 버그 수정 | `fix: 한글 입력 중 Enter 중복 전송 수정` |
 | `refactor` | 동작 변화 없는 구조 개선 | `refactor: 목업 응답을 lib로 분리` |
 | `style` | 포맷/스타일 변경 (로직 무관) | `style: Header 들여쓰기 정리` |
 | `ui` | UI/디자인/반응형/다크모드 변경 | `ui: 다크모드를 시스템 설정에 맞게 변경` |
 | `docs` | 문서/주석 변경 | `docs: CLAUDE.md 명령어 설명 보완` |
-| `test` | 테스트 추가/수정 | `test: Chat 컴포넌트 테스트 추가` |
+| `test` | 테스트 추가/수정 | `test: RecipeCard 컴포넌트 테스트 추가` |
 | `perf` | 성능 개선 | `perf: 메시지 목록 렌더링 최적화` |
 | `chore` | 빌드/설정/의존성/기타 | `chore: .gitignore에 playwright 폴더 추가` |
 | `claude` | `.claude/` 커맨드/에이전트 설정 | `claude: code-reviewer 에이전트 추가` |

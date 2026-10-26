@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 프로젝트 개요
 
-**ecommerce-ai-agent**는 Next.js 16.3.8, React 19.2.8, TypeScript 5로 구축된 애플리케이션입니다. App Router 패턴과 Tailwind CSS v4를 사용합니다.
+**요리 레시피**는 냉장고 속 재료로 만드는 1인분 레시피 서비스로, Next.js 16.3.8, React 19.2.8, TypeScript 5로 구축되어 있습니다. App Router 패턴과 Tailwind CSS v4를 사용합니다.
 
 ## 개발 명령어
 
