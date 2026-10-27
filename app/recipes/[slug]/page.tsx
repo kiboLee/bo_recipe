@@ -9,8 +9,9 @@ interface RecipePageProps {
   params: Promise<{ slug: string }>;
 }
 
-// 빌드 때 생성된 슬러그 외의 경로는 렌더링하지 않고 바로 404를 반환한다 (상태 코드 404 보장)
-export const dynamicParams = false;
+// 빌드 때 만들지 않은 슬러그는 요청 시 생성한다. 발행 직후 재배포 없이도 상세가 열리도록 하기 위함이며,
+// 존재하지 않는 슬러그는 notFound()가 404를 반환한다
+export const dynamicParams = true;
 
 // ISR 재검증 주기 (초). route segment config는 정적 리터럴이어야 해서 환경 변수로 바꿀 수 없다
 export const revalidate = 600;
