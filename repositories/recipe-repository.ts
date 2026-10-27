@@ -13,6 +13,8 @@ import { getSupabaseClient } from '@/repositories/supabase-client';
 // 테이블 이름과 발행 상태 값 (supabase/seed.sql과 테이블 생성 SQL 기준)
 const TABLE_RECIPES = 'recipes';
 const STATUS_PUBLISHED = '발행';
+// 목록 조회 한 번에 가져올 행 수 (Supabase 기본 응답 행 수 제한 이하로 맞춘다)
+const LIST_PAGE_SIZE = 1000;
 // 슬러그 형식: 영문 소문자와 하이픈만 허용 (형식이 틀리면 조회 없이 null)
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 // 외부 이미지는 Supabase Storage 호스트만 허용한다 (next.config.ts remotePatterns와 맞춘다)
@@ -176,18 +178,29 @@ function toDetail(row: RecipeRow, ingredients: RecipeIngredientDto[]): RecipeDet
 export function createRecipeRepository(): RecipeRepository {
   return {
     async findPublishedRecipes() {
-      const { data, error } = await getSupabaseClient()
-        .from(TABLE_RECIPES)
-        .select(LIST_COLUMNS)
-        .eq('status', STATUS_PUBLISHED)
-        .order('published_at', { ascending: false });
+      // Supabase 응답은 한 번에 기본 행 수 제한이 있으므로 범위를 나눠 끝까지 가져온다
+      const rows: RecipeRow[] = [];
+      for (let from = 0; ; from += LIST_PAGE_SIZE) {
+        const { data, error } = await getSupabaseClient()
+          .from(TABLE_RECIPES)
+          .select(LIST_COLUMNS)
+          .eq('status', STATUS_PUBLISHED)
+          // 같은 발행일이 여러 개여도 페이지 경계에서 중복·누락되지 않도록 id를 보조 정렬로 쓴다
+          .order('published_at', { ascending: false })
+          .order('id', { ascending: false })
+          .range(from, from + LIST_PAGE_SIZE - 1);
 
-      if (error) {
-        throw new Error(`레시피 목록 조회 실패: ${error.message}`);
+        if (error) {
+          throw new Error(`레시피 목록 조회 실패: ${error.message}`);
+        }
+
+        const page = (data ?? []) as unknown as RecipeRow[];
+        if (page.length === 0) break;
+        rows.push(...page);
       }
 
       const recipes: RecipeSummaryDto[] = [];
-      for (const row of (data ?? []) as unknown as RecipeRow[]) {
+      for (const row of rows) {
         if (parseIngredients(row).length === 0) {
           warn(row, '재료 상세가 없어 목록에서 제외');
           continue;
