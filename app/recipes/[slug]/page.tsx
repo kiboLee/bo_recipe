@@ -9,9 +9,10 @@ interface RecipePageProps {
   params: Promise<{ slug: string }>;
 }
 
-// 빌드 때 만들지 않은 슬러그는 요청 시 생성한다. 발행 직후 재배포 없이도 상세가 열리도록 하기 위함이며,
-// 존재하지 않는 슬러그는 notFound()가 404를 반환한다
-export const dynamicParams = true;
+// 빌드 때 만들지 않은 슬러그는 렌더링하지 않고 바로 404를 반환한다 (상태 코드 404 보장)
+// dynamicParams = true로 두면 없는 슬러그가 200으로 응답하고 캐시되어 soft 404가 된다.
+// 따라서 새로 발행한 레시피는 재배포(Vercel Deploy Hook)해야 상세가 열린다
+export const dynamicParams = false;
 
 // ISR 재검증 주기 (초). route segment config는 정적 리터럴이어야 해서 환경 변수로 바꿀 수 없다
 export const revalidate = 600;
